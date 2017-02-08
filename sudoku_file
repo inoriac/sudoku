@@ -1,0 +1,153 @@
+#include <iostream>
+#include<stdlib.h>
+#include<time.h>
+#include<windows.h>
+using namespace std;
+const int MAX=10;
+
+void carica(int matrice[MAX][MAX], int r, int c){
+    for(int i=1; i<=r; i++){
+        for(int j=1; j<=c; j++){
+            matrice[i][j]=j;
+        }
+    }
+}
+
+int SEL(){
+    int a, b, c, d,  e, f, g, h, i;
+    a=1;
+    b=2;
+    c=3;
+    d=4;
+    e=5;
+    f=6;
+    g=7;
+    h=8;
+    i=9;
+    int k=0;
+do{
+    k=rand()%9+1;
+    if(k==a){
+        a=0;
+        return k;
+    }
+    else if(k==b){
+        b=0;
+        return k;
+    }
+    else if(k==c){
+        c=0;
+        return k;
+    }
+    else if(k==d){
+        d=0;
+        return k;
+    }
+    else if(k==e){
+        e=0;
+        return k;
+    }
+    else if(k==f){
+        f=0;
+        return k;
+    }
+    else if(k==g){
+        g=0;
+        return k;
+    }
+    else if(k==h){
+        h=0;
+        return k;
+    }
+    else if(k==i){
+        i=0;
+        return k;
+    }
+
+    }while(a==0 && b==0 && c==0 && d==0 && e==0 && f==0 && g==0 && h==0 && i==0);
+    return SEL();
+}
+
+void Check1(int matrice[MAX][MAX], int i, int j){
+int k;
+int temp=0;
+        k=SEL();
+        temp=matrice[i][j];
+            matrice[i][j]=matrice[i][k];
+            matrice[i][k]=temp;
+}
+
+int Pos(int matrice[MAX][MAX], int r, int a){
+int conta=0;
+for(int j=1; j<MAX; j++){
+    for(int i=1; i<=r; i++){
+        if(matrice[i][j]==a) conta++;
+    }
+    if(conta==0)return j;
+}
+}
+
+void Check(int matrice[MAX][MAX], int i, int j, int r){
+int a;
+int z;
+int temp=0;
+    for(int k=1; k<=r; k++){
+        a=matrice[k][j];
+        if(matrice[i][j]==a){
+           z=Pos(matrice, r, a);
+           temp=matrice[i][j];
+           matrice[i][j]=matrice[i][z];
+           matrice[i][z]=temp;
+
+        }
+    }
+}
+void Ord_Riga1(int matrice[MAX][MAX], int r, int c){
+    for(int i=1; i<=1; i++){
+        for(int j=1; j<=c; j++){
+            Check1(matrice, i, j);
+        }
+    }
+}
+
+void Ord_Riga(int matrice[MAX][MAX], int r, int c){
+    for(int i=r; i<=r; i++){
+        for(int j=1; j<=c; j++){
+            Check(matrice, i, j, r);
+        }
+    }
+}
+
+void stampa(int matrice[MAX][MAX], int r, int c){
+for(int i=1; i<=r; i++){
+        for(int j=1; j<=c; j++){
+                Sleep(100);
+            if(j==4 || j==7) cout<<"||";
+            cout<< matrice[i][j]<<" ";
+        }
+
+        if(i==3 || i==6) cout<<"\n====================="<<endl;
+        else cout<<endl;
+}
+}
+
+int main()
+{
+    int matrice[MAX][MAX];
+    int c=9;
+    int r=9;
+
+    cout<<"building sudoku..."<<endl<<endl<<endl;
+    carica(matrice, r, c);
+    srand (time(NULL));
+    Ord_Riga1(matrice, r, c);
+
+    for(int r=2; r<=9; r++){
+    Ord_Riga(matrice, r, c);
+    }
+
+    stampa(matrice, r, c);
+
+    system("pause");
+    return 0;
+}
